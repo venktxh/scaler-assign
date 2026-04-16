@@ -3,7 +3,7 @@ require("dotenv").config();
 const app = require("./src/app");
 const initDB = require("./src/utils/initDB");
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // ✅ FIX
 
 async function start() {
   await initDB();
@@ -12,4 +12,5 @@ async function start() {
     console.log(`Server running on port ${PORT}`);
   });
 }
+
 start();
