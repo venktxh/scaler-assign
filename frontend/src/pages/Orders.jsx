@@ -3,20 +3,34 @@ import { getOrders } from "../api/orderApi";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ NEW
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const res = await getOrders();
+        console.log("Orders API:", res.data); // 🔥 debug
         setOrders(res.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false); // ✅ done loading
       }
     };
 
     fetchOrders();
   }, []);
 
+  // ✅ show loading first
+  if (loading) {
+    return (
+      <div className="h-[60vh] flex items-center justify-center">
+        <h2 className="text-xl">Loading orders...</h2>
+      </div>
+    );
+  }
+
+  // ✅ show empty only AFTER loading
   if (!orders.length) {
     return (
       <div className="h-[60vh] flex items-center justify-center">
