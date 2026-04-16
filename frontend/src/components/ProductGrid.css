@@ -1,0 +1,40 @@
+.shop-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background-color: #e3e6e6;
+}
+
+.box {
+  background-color: white;
+  padding: 15px;
+  height: 350px;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+.box:hover {
+  transform: scale(1.03);
+}
+
+.box-img {
+  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+}
+
+.price {
+  color: #007185;
+  font-weight: bold;
+}
+
+.add-btn {
+  background-color: #ffd814;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+}

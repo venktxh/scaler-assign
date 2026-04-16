@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* NAVBAR (keep yours if already exists) */
+.navbar {
+  height: 60px;
+  background-color: #0f1111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+/* PRODUCT GRID */
+.shop-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background-color: #e3e6e6;
+}
+
+/* PRODUCT CARD */
+.box {
+  background-color: white;
+  padding: 15px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.box-content h2 {
+  font-size: 18px;
+}
+
+.box-img {
+  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.price {
+  color: #007185;
+  font-weight: bold;
+}
+
+.add-btn {
+  background-color: #ffd814;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}

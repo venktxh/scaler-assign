@@ -1,0 +1,49 @@
+.navbar {
+  height: 60px;
+  background-color: #131921;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.nav-logo {
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logo-text {
+  color: #f08804;
+}
+
+.nav-address {
+  font-size: 12px;
+}
+
+.add-sec {
+  font-weight: bold;
+}
+
+.nav-search {
+  display: flex;
+  width: 40%;
+}
+
+.nav-search input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+}
+
+.nav-search button {
+  background-color: #febd69;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.nav-cart {
+  cursor: pointer;
+  font-weight: bold;
+}

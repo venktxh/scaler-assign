@@ -1,0 +1,16 @@
+.hero-banner {
+  background-image: url("https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da");
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 10px;
+  font-size: 14px;
+}
