@@ -96,7 +96,7 @@ exports.getProductById = async (id) => {
 // ✅ GET ALL CATEGORIES (BONUS API)
 exports.getCategories = async () => {
   try {
-    const [rows] = await db.query("SELECT * FROM Category");
+    const [rows] = await db.query("SELECT * FROM category");
     return rows;
   } catch (err) {
     console.error("❌ CATEGORY ERROR:", err);

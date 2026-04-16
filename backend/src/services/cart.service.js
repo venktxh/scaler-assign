@@ -4,13 +4,13 @@ const USER_ID = "default_user";
 
 // 1. Get or create cart
 async function getOrCreateCart() {
-  const [rows] = await db.query("SELECT * FROM Cart WHERE userId = ?", [
+  const [rows] = await db.query("SELECT * FROM cart WHERE userId = ?", [
     USER_ID,
   ]);
 
   if (rows.length > 0) return rows[0];
 
-  const [result] = await db.query("INSERT INTO Cart (userId) VALUES (?)", [
+  const [result] = await db.query("INSERT INTO cart (userId) VALUES (?)", [
     USER_ID,
   ]);
 
@@ -20,7 +20,7 @@ async function getOrCreateCart() {
 exports.addToCart = async (productId) => {
   const cart = await getOrCreateCart();
 
-  const [product] = await db.query("SELECT * FROM Product WHERE id = ?", [
+  const [product] = await db.query("SELECT * FROM product WHERE id = ?", [
     productId,
   ]);
 
@@ -33,17 +33,17 @@ exports.addToCart = async (productId) => {
   }
 
   const [existing] = await db.query(
-    "SELECT * FROM CartItem WHERE cartId = ? AND productId = ?",
+    "SELECT * FROM cartitem WHERE cartId = ? AND productId = ?",
     [cart.id, productId],
   );
 
   if (existing.length > 0) {
-    await db.query("UPDATE CartItem SET quantity = quantity + 1 WHERE id = ?", [
+    await db.query("UPDATE cartitem SET quantity = quantity + 1 WHERE id = ?", [
       existing[0].id,
     ]);
   } else {
     await db.query(
-      "INSERT INTO CartItem (cartId, productId, quantity) VALUES (?, ?, 1)",
+      "INSERT INTO cartitem (cartId, productId, quantity) VALUES (?, ?, 1)",
       [cart.id, productId],
     );
   }
@@ -63,16 +63,15 @@ exports.getCart = async () => {
       p.price,
       ci.quantity,
       pi.url
-    FROM CartItem ci
-    JOIN Product p ON ci.productId = p.id
-    LEFT JOIN ProductImage pi ON p.id = pi.productId
+    FROM cartitem ci
+    JOIN product p ON ci.productId = p.id
+    LEFT JOIN productimage pi ON p.id = pi.productId
     WHERE ci.cartId = ?
     GROUP BY ci.id, p.name, p.price, ci.quantity, pi.url
     `,
     [cart.id],
   );
 
-  // ✅ manually rename url → image
   const mappedItems = items.map((item) => ({
     id: item.id,
     name: item.name,
@@ -91,15 +90,15 @@ exports.getCart = async () => {
 
 exports.updateCartItem = async (itemId, quantity) => {
   if (quantity === 0) {
-    await db.query("DELETE FROM CartItem WHERE id = ?", [itemId]);
+    await db.query("DELETE FROM cartitem WHERE id = ?", [itemId]);
     return { message: "Item removed from cart" };
   }
 
   const [product] = await db.query(
     `
-    SELECT stock FROM Product 
+    SELECT stock FROM product 
     WHERE id = (
-      SELECT productId FROM CartItem WHERE id = ?
+      SELECT productId FROM cartitem WHERE id = ?
     )
     `,
     [itemId],
@@ -113,7 +112,7 @@ exports.updateCartItem = async (itemId, quantity) => {
     throw new Error("Quantity exceeds available stock");
   }
 
-  await db.query("UPDATE CartItem SET quantity = ? WHERE id = ?", [
+  await db.query("UPDATE cartitem SET quantity = ? WHERE id = ?", [
     quantity,
     itemId,
   ]);
@@ -122,6 +121,6 @@ exports.updateCartItem = async (itemId, quantity) => {
 };
 
 exports.removeCartItem = async (itemId) => {
-  await db.query("DELETE FROM CartItem WHERE id = ?", [itemId]);
+  await db.query("DELETE FROM cartitem WHERE id = ?", [itemId]);
   return { message: "Item removed" };
 };
